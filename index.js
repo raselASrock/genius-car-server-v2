@@ -26,6 +26,12 @@ async function run(){
         const serviceCollection = client.db('genius-car').collection('services')
         const orderCollection = client.db('genius-car').collection('orders')
 
+
+        app.post('/jwt', (req, res) =>{
+            const user = req.body
+            console.log(user);
+        })
+
         app.get('/services', async (req, res) =>{
             const query = {};
             const cursor = serviceCollection.find(query);
