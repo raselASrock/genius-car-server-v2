@@ -30,7 +30,7 @@ function verifyJWT(req, res, next){
     const token = authHeader.split(' ')[1];
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, function(err, decoded){
         if(err){
-            return res.status(401).send({message: 'unauthorised access'})
+            return res.status(403).send({message: 'unauthorised access'})
         }
         req.decoded = decoded;
         next()
@@ -70,6 +70,9 @@ async function run(){
             // console.log(req.headers.authorization)
             const decoded = req.decoded;
             console.log('Inside orders api',decoded);
+            if(decoded.email !== req.query.email){
+                res.status(403).send({message: 'unauthorized access'})
+            }
             let query = {}
             if(req.query.email){
                 query = {
