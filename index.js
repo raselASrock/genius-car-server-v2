@@ -89,7 +89,7 @@ async function run(){
             res.send(result)
         })
 
-        app.patch('/orders/:id', async (req, res) => {
+        app.patch('/orders/:id', verifyJWT, async (req, res) => {
             const id = req.params.id;
             const status = req.body.status
             const query = { _id: ObjectId(id) }
@@ -101,7 +101,7 @@ async function run(){
             const result = await orderCollection.updateOne(query, updatedDoc);
             res.send(result);
         })
-        app.delete('/orders/:id', async (req, res) =>{
+        app.delete('/orders/:id', verifyJWT, async (req, res) =>{
             const id = req.params.id;
             const query = { _id: ObjectId(id)}
             const result = await orderCollection.deleteOne(query);
